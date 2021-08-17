@@ -13,28 +13,23 @@
 <h2>Edit Meal</h2>
 
 <form action="meals" method="post">
-    <jsp:useBean id="meal" class="ru.javawebinar.topjava.model.Meal"/>
-    <c:set var="meal" value="${requestScope.meal}"/>
-    <c:if test="${not empty meal}">
-        <input type="hidden" name="id" value="${meal.id}"/>
-        <c:set var="dateTime" value="${meal.dateTime}"/>
-        <c:set var="description" value="${meal.description}"/>
-        <c:set var="calories" value="${meal.calories}"/>
+    <c:if test="${not empty param.id}">
+        <input type="hidden" name="id" value="${param.id}"/>
     </c:if>
     <div>
             <label>DateTime:</label>
-            <input type="datetime-local" name="dateTime" value="<c:out default="" value="${dateTime}"/>">
+            <input type="datetime-local" name="dateTime" value="<c:out default="" value="${requestScope.dateTime}"/>">
     </div>
     <div>
             <label>Description:</label>
-            <input type="text" name="description" value="<c:out default="" value="${description}"/>">
+            <input type="text" name="description" value="<c:out default="" value="${requestScope.description}"/>">
     </div>
     <div class="tableRow">
             <label>Calories:</label>
-            <input type="number" name="calories" value="<c:out default="" value="${calories}"/>">
+            <input type="number" name="calories" value="<c:out default="" value="${requestScope.calories}"/>">
     </div>
     <input type="submit" value="Save"/>
-    <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancel"/>
+    <input onclick="window.history.go(-1); return false;" type="button" value="Cancel"/>
 </form>
 
 </body>

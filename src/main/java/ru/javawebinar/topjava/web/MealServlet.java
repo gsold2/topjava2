@@ -36,7 +36,10 @@ public class MealServlet extends HttpServlet {
             switch (action) {
                 case "update":
                     log.debug("forward to /mealForm.jsp");
-                    request.setAttribute("meal", mealRepository.getMeal(id));
+                    Meal meal = mealRepository.getMeal(id);
+                    request.setAttribute("dateTime", meal.getDateTime());
+                    request.setAttribute("description", meal.getDescription());
+                    request.setAttribute("calories", meal.getCalories());
                     request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                     break;
                 case "delete":
