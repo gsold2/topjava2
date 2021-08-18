@@ -17,16 +17,16 @@
         <input type="hidden" name="id" value="${param.id}"/>
     </c:if>
     <div>
-            <label>DateTime:</label>
-            <input type="datetime-local" name="dateTime" value="<c:out default="" value="${requestScope.dateTime}"/>">
+        <label>DateTime:</label>
+        <input type="datetime-local" name="dateTime" value="${requestScope.dateTime}">
     </div>
     <div>
-            <label>Description:</label>
-            <input type="text" name="description" value="<c:out default="" value="${requestScope.description}"/>">
+        <label>Description:</label>
+        <input type="text" name="description" value="${requestScope.description}">
     </div>
     <div class="tableRow">
-            <label>Calories:</label>
-            <input type="number" name="calories" value="<c:out default="" value="${requestScope.calories}"/>">
+        <label>Calories:</label>
+        <input type="number" name="calories" value="${requestScope.calories}">
     </div>
     <input type="submit" value="Save"/>
     <input onclick="window.history.go(-1); return false;" type="button" value="Cancel"/>
