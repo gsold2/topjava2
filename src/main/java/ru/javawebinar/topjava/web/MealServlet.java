@@ -44,7 +44,8 @@ public class MealServlet extends HttpServlet {
                     break;
                 case "delete":
                     mealRepository.deleteMeal(id);
-                    break;
+                    response.sendRedirect("meals");
+                    return;
                 default:
                     break;
             }
