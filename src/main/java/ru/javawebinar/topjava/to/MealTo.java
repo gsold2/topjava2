@@ -1,17 +1,23 @@
 package ru.javawebinar.topjava.to;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
+@Component
 public class MealTo {
-    private final Integer id;
+    private Integer id;
 
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final String description;
+    private String description;
 
-    private final int calories;
+    private int calories;
 
-    private final boolean excess;
+    private boolean excess;
+
+    public MealTo() {
+    }
 
     public MealTo(Integer id, LocalDateTime dateTime, String description, int calories, boolean excess) {
         this.id = id;

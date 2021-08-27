@@ -8,10 +8,7 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
@@ -21,7 +18,7 @@ import java.util.stream.Collectors;
 public class InMemoryMealRepository implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
 
-    private final Map<Integer, Map<Integer, Meal>> repository = new ConcurrentHashMap<>();
+    private final Map<Integer, Map<Integer, Meal>> repository = new HashMap<>();
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
@@ -35,7 +32,7 @@ public class InMemoryMealRepository implements MealRepository {
             meal.setId(counter.incrementAndGet());
             Map<Integer, Meal> map = new ConcurrentHashMap<>();
             Integer mealId = meal.getId();
-            log.info("save {} userId {}", mealId, userId);
+            log.info("save {} with userId={}", mealId, userId);
             repository.put(userId, map);
             return map.putIfAbsent(mealId, meal);
         }
@@ -43,27 +40,27 @@ public class InMemoryMealRepository implements MealRepository {
             meal.setId(counter.incrementAndGet());
         }
         Integer mealId = meal.getId();
-        log.info("save {} userId {}", mealId, userId);
+        log.info("save {} with userId={}", mealId, userId);
         return mealMap.compute(mealId, (key, value) -> meal);
     }
 
     @Override
     public boolean delete(int userId, int id) {
-        log.info("delete {} for userId {}", id, userId);
+        log.info("delete {} with userId={}", id, userId);
         Map<Integer, Meal> value = repository.get(userId);
         return value != null && value.remove(id) != null;
     }
 
     @Override
     public Meal get(int userId, int id) {
-        log.info("get {} for userId {}", id, userId);
+        log.info("get {} with userId={}", id, userId);
         Map<Integer, Meal> value = repository.get(userId);
         return value != null ? value.get(id) : null;
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        log.info("getAll userId {}", userId);
+        log.info("getAll with userId={}", userId);
         return filterByPredicate(userId, meal -> true);
     }
 

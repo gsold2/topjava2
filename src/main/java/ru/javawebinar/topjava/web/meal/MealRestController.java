@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
 import java.time.LocalDate;
@@ -39,21 +41,22 @@ public class MealRestController {
         service.delete(userId, id);
     }
 
-    public Meal get(int id) {
+    public MealTo get(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("get {} with userId={}", id, userId);
-        return service.get(userId, id);
+        Meal meal = service.get(userId, id);
+        return MealsUtil.createTo(meal, MealsUtil.DEFAULT_CALORIES_PER_DAY <= meal.getCalories());
     }
 
-    public List<Meal> getAll() {
+    public List<MealTo> getAll() {
         int userId = SecurityUtil.authUserId();
         log.info("getAll with userId={}", userId);
-        return service.getAll(userId);
+        return MealsUtil.getTos(service.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    public List<Meal> getBetweenDates(LocalDate startDate, LocalDate endDate) {
+    public List<MealTo> getBetweenDates(LocalDate startDate, LocalDate endDate) {
         int userId = SecurityUtil.authUserId();
         log.info("getBetweenDates with userId={}", userId);
-        return service.getBetweenDates(userId, startDate, endDate);
+        return MealsUtil.getTos(service.getBetweenDates(userId, startDate, endDate), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 }
