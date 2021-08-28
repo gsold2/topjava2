@@ -19,8 +19,12 @@ import static ru.javawebinar.topjava.util.ValidationUtil.checkNew;
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger(MealRestController.class);
 
+    private final MealService service;
+
     @Autowired
-    private MealService service;
+    public MealRestController(MealService service) {
+        this.service = service;
+    }
 
     public Meal create(Meal meal) {
         int userId = SecurityUtil.authUserId();
@@ -29,10 +33,10 @@ public class MealRestController {
         return service.create(userId, meal);
     }
 
-    public Meal update(Meal meal) {
+    public void update(Meal meal) {
         int userId = SecurityUtil.authUserId();
         log.info("update {} with userId={}", meal, userId);
-        return service.update(userId, meal);
+        service.update(userId, meal);
     }
 
     public void delete(int id) {
@@ -41,11 +45,10 @@ public class MealRestController {
         service.delete(userId, id);
     }
 
-    public MealTo get(int id) {
+    public Meal get(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("get {} with userId={}", id, userId);
-        Meal meal = service.get(userId, id);
-        return MealsUtil.createTo(meal, MealsUtil.DEFAULT_CALORIES_PER_DAY <= meal.getCalories());
+        return service.get(userId, id);
     }
 
     public List<MealTo> getAll() {
