@@ -21,6 +21,26 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
+
+    <form method="get" action="meals">
+        <p>
+            From date (inclusive):
+            <input type="date" value="${startDate}" name="startDate">
+            To date (inclusive):
+            <input type="date" value="${endDate}" name="endDate">
+        </p>
+        <p>
+            From time (inclusive):
+            <input type="time" value="${startTime}" name="startTime">
+            To time (exclusive):
+            <input type="time" value="${endTime}" name="endTime">
+        </p>
+        <p>
+            <button type="submit">Filter</button>
+            <button onclick="window.history.back()" type="button">Cancel</button>
+        </p>
+    </form>
+
     <a href="meals?action=create">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">

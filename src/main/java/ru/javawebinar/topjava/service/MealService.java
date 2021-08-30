@@ -39,12 +39,6 @@ public class MealService {
     }
 
     public List<Meal> getBetweenDates(int userId, LocalDate startDate, LocalDate endDate) {
-        if (startDate == null) {
-            startDate = LocalDate.MIN;
-        }
-        if (endDate == null) {
-            endDate = LocalDate.MAX;
-        }
         return repository.getBetweenDates(userId, startDate, endDate);
     }
 }
