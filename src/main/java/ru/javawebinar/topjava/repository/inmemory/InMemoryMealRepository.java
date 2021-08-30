@@ -30,11 +30,11 @@ public class InMemoryMealRepository implements MealRepository {
         Map<Integer, Meal> mealMap = repository.get(userId);
         if (mealMap == null) {
             meal.setId(counter.incrementAndGet());
-            Map<Integer, Meal> map = new ConcurrentHashMap<>();
+            Map<Integer, Meal> newMealMap = new ConcurrentHashMap<>();
             Integer mealId = meal.getId();
             log.info("save {} with userId={}", mealId, userId);
-            repository.put(userId, map);
-            return map.putIfAbsent(mealId, meal);
+            repository.put(userId, newMealMap);
+            return newMealMap.putIfAbsent(mealId, meal);
         }
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
